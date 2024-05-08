@@ -21,10 +21,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.get("/", (req, res) => res.sendStatus(200));
 app.post("/task", taskController.create.bind(taskController));
-
 app.put("/task/:id/complete", taskController.complete.bind(taskController));
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
-});
+export default app;
