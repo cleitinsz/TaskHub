@@ -1,10 +1,16 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import cors from "cors";
+import KnexConnection from "./application/infra/database/knex/KnexConnection";
 import TaskController from "./application/controller/TaskController";
 import { CreateTask, CompleteTask } from "./application/useCase/Task";
 import TaskRepository from "./application/repository/TaskRepository";
 
-const taskRepository = new TaskRepository();
+const knexConnection = new KnexConnection();
+const dbConnection = knexConnection.getInstance();
+
+const taskRepository = new TaskRepository(dbConnection);
 
 const createTask = new CreateTask(taskRepository);
 const completeTask = new CompleteTask(taskRepository);
