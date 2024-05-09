@@ -1,4 +1,4 @@
-import crypto from "crypto";
+import IDGenerator from "./id-generator";
 
 export default class Task {
   done?: boolean = false;
@@ -12,7 +12,7 @@ export default class Task {
   ) {}
 
   static create(title: string) {
-    const taskId = crypto.randomUUID();
+    const taskId = IDGenerator.generate();
 
     return new Task(taskId, title, new Date());
   }
