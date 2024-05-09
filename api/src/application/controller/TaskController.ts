@@ -1,10 +1,11 @@
-import { CreateTask, CompleteTask } from "../useCase/Task";
+import { CreateTask, CompleteTask, AssignCategoryTask } from "../useCase/Task";
 import { Request, Response } from "express";
 
 export default class TaskController {
   constructor(
     readonly createTask: CreateTask,
-    readonly completeTask: CompleteTask
+    readonly completeTask: CompleteTask,
+    readonly assignCategoryTask: AssignCategoryTask
   ) {}
 
   async create(req: Request, res: Response) {
@@ -25,5 +26,13 @@ export default class TaskController {
     res.status(201).json({
       task: task,
     });
+  }
+
+  async assignCategory(req: Request, res: Response) {
+    const { id: taskId } = req.params;
+    const { categoryId } = req.body;
+    const task = await this.assignCategoryTask.execute(taskId, categoryId);
+
+    res.status(201).json({ task: task });
   }
 }

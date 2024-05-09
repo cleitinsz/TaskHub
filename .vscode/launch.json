@@ -13,7 +13,7 @@
         "<node_internals>/**"
       ],
       "program": "${workspaceFolder}/api/src/server.ts",
-      "preLaunchTask": "tsc: build - ${workspaceFolder}/api/tsconfig.json",
+      "preLaunchTask": "tsc: build - api/tsconfig.build.json",
       "outFiles": [
         "${workspaceFolder}/api/dist/**/*.js"
       ]

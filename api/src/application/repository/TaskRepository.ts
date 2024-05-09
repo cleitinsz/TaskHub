@@ -30,4 +30,13 @@ export default class TaskRepository {
     );
     return task;
   }
+
+  async update(task: Task): Promise<void> {
+    await this.dbConnection("task").where({ id: task.id }).update({
+      title: task.title,
+      categoryId: task.categoryId,
+      done: task.done,
+      updated_at: task.updatedAt,
+    });
+  }
 }

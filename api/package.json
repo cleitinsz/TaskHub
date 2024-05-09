@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "ts-node src/server.ts",
-    "build": "tsc",
+    "build": "rm -rf dist && tsc -b ./tsconfig.build.json",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
