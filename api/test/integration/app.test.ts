@@ -10,7 +10,7 @@ describe("App Integration Test", () => {
 
   test("should return 200 when call GET", async () => {
     const response = await server.get("/");
-  
+
     expect(response.status).toBe(200);
   });
 });

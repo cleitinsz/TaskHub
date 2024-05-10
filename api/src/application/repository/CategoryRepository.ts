@@ -1,6 +1,6 @@
 import { Category } from "../../domain/entity/Category";
 
-export default class CategoryRepository {
+export class CategoryRepository {
   constructor(readonly dbConnection: any) {}
 
   async create(category: Category): Promise<void> {

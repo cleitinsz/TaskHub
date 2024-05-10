@@ -5,17 +5,19 @@ import {
 } from "../useCase/Category";
 import { Request, Response } from "express";
 
-export default class CategoryController {
-  constructor(
-    readonly createCategory: CreateCategory,
-    readonly listCategory: ListCategory,
-    readonly updateCategory: UpdateCategory
-  ) {}
+type CategoryUseCase = {
+  createCategory: CreateCategory;
+  listCategory: ListCategory;
+  updateCategory: UpdateCategory;
+};
+
+export class CategoryController {
+  constructor(readonly useCases: CategoryUseCase) {}
 
   async create(req: Request, res: Response) {
     const { name } = req.body;
 
-    const category = await this.createCategory.execute(name);
+    const category = await this.useCases.createCategory.execute(name);
 
     res.status(200).json({
       category: category,
@@ -23,7 +25,7 @@ export default class CategoryController {
   }
 
   async list(req: Request, res: Response) {
-    const categories = await this.listCategory.execute();
+    const categories = await this.useCases.listCategory.execute();
 
     res.status(200).json({
       categories: categories,
@@ -33,12 +35,10 @@ export default class CategoryController {
   async update(req: Request, res: Response) {
     const { id, name } = req.params;
 
-    const category = await this.updateCategory.execute(id, name);
+    const category = await this.useCases.updateCategory.execute(id, name);
 
     res.status(201).json({
       category: category,
     });
   }
-
-
 }

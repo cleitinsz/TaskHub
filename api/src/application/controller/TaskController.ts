@@ -1,17 +1,19 @@
 import { CreateTask, CompleteTask, AssignCategoryTask } from "../useCase/Task";
 import { Request, Response } from "express";
 
-export default class TaskController {
-  constructor(
-    readonly createTask: CreateTask,
-    readonly completeTask: CompleteTask,
-    readonly assignCategoryTask: AssignCategoryTask
-  ) {}
+type TaskUseCases = {
+  createTask: CreateTask;
+  completeTask: CompleteTask;
+  assignCategoryTask: AssignCategoryTask;
+};
+
+export class TaskController {
+  constructor(readonly useCases: TaskUseCases) {}
 
   async create(req: Request, res: Response) {
     const { title } = req.body;
 
-    const task = await this.createTask.execute(title);
+    const task = await this.useCases.createTask.execute(title);
 
     res.status(200).json({
       task: task,
@@ -21,7 +23,7 @@ export default class TaskController {
   async complete(req: Request, res: Response) {
     const { id: taskId } = req.params;
 
-    const task = await this.completeTask.execute(taskId);
+    const task = await this.useCases.completeTask.execute(taskId);
 
     res.status(201).json({
       task: task,
@@ -31,7 +33,7 @@ export default class TaskController {
   async assignCategory(req: Request, res: Response) {
     const { id: taskId } = req.params;
     const { categoryId } = req.body;
-    const task = await this.assignCategoryTask.execute(taskId, categoryId);
+    const task = await this.useCases.assignCategoryTask.execute(taskId, categoryId);
 
     res.status(201).json({ task: task });
   }
